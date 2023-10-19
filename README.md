@@ -84,3 +84,36 @@ function sendWhatsAppMsg($sendTo, $action, $params)
         }
     }
 ```
+
+### Random String Generation
+```php
+if (!function_exists('getRandomString')) {
+    function getRandomString($n)
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
+    }
+}
+
+if (!function_exists('getRandomStringSmall')) {
+    function getRandomStringSmall($n)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $n; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
+        }
+
+        return $randomString;
+    }
+}
+```
