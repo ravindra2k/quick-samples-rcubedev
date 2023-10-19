@@ -1,5 +1,4 @@
 # quick-samples-rcubedev
-Quick Samples
 
 ### Whatsapp Cloud Messaging API Integration;
 **OTP Auth Messaging**
@@ -114,6 +113,37 @@ if (!function_exists('getRandomStringSmall')) {
         }
 
         return $randomString;
+    }
+}
+```
+
+### Patch Log
+```php
+if (!function_exists('patchLog')) {
+    function patchLog(
+        $refId = null,
+        $refName = null,
+        $initiator = null,
+        $module = null,
+        $action = null,
+        $beforeValue = null,
+        $afterValue = null,
+        $remarks = null,
+        $logDevice = 'Web'
+    ) {
+        Log::create([
+            'ref_id' => $refId,
+            'ref_name' => $refName,
+            'initiator' => session('associate_id'),
+            'module' => $module,
+            'action' => $action,
+            'before_value' => $beforeValue,
+            'after_value' => $afterValue,
+            'remarks' => $remarks,
+            'log_ip' => request()->ip(),
+            'log_device' => $logDevice,
+            'log_agent' => request()->header('User-Agent'),
+        ]);
     }
 }
 ```
