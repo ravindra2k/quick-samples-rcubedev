@@ -258,3 +258,54 @@ class RewardPartnersImport implements ToModel, WithStartRow
     }
 }
 ```
+
+### Custom Filtering using Datatables;
+
+```html
+<div id="typeFilter-cont" class="col-md-3 mb-3">
+    <label for="" class="form-label">Filter Partner Type</label>
+    <select name="typeFilter" id="typeFilter" class="select2 form-select form-control border">
+        <option value="">All Partners</option>
+        // Types for Filtering;
+        @foreach ($partnerTypes as $type)
+            <option value="{{ $type->title }}">{{ $type->title }}</option>
+        @endforeach
+    </select>
+</div>
+```
+
+```js
+$(document).ready(function() {
+        $('#myDataTable').dataTable({
+            "searching": true
+        });
+
+        var table = $('#myDataTable').DataTable();
+        
+        var typeIndex = 0;
+        $("#myDataTable th").each(function (i) {
+            console.log($($(this)).html());
+            if ($($(this)).html() == "Partner Type") {
+                typeIndex = i; return false;
+            }
+        });
+
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+            var selectedItem = $('#typeFilter').val()
+            var type = data[typeIndex];
+            if (selectedItem === "" || type.includes(selectedItem)) {
+                return true;
+            }
+            return false;
+            }
+        );
+
+
+        $('#typeFilter').change(function (e) {
+            table.draw();
+        });
+
+        table.draw();
+});
+```
