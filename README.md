@@ -309,3 +309,5 @@ $(document).ready(function() {
         table.draw();
 });
 ```
+
+### Let's Start the Collection again
