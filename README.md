@@ -15,9 +15,9 @@ function sendWhatsAppMsg($sendTo, $action, $params)
         $curl = curl_init();
         
         // ToDo: Update API Data Dynamic;
-        $apiVersion = 'v17.0';
-        $apiSenderId = '154391567754698';
-        $apiAuthKey = 'EAAPRPZAZCDgBcBO3z8hD7nNZBaJjM7iqPv8ISd41rC2crtCblSDiZC9lfHuS7AKv4oePblPibLZAqsW6ey9Hinw7ilgNVMknnfEkbpiBmqEpI7ohGK8OmeHs7zCKYCIXTA0PUVAZCcZChS2j0ZBNn2y40jPTZB4i2EBiFo5TkX42UDO5Hj4vlo1yAbDEglz1dgq27g3afHyZBdZC9ogYZCNzix8ZD';
+        $apiVersion = 'v17.0'; // Your Version Here
+        $apiSenderId = '000000000000000'; // Your Sender Id Here;
+        $apiAuthKey = ''; // Your AUTH Key Here;
 
         $endpoint = 'https://graph.facebook.com/'.$apiVersion.'/'.$apiSenderId.'/messages';
 
@@ -29,10 +29,10 @@ function sendWhatsAppMsg($sendTo, $action, $params)
         $body =
         '{
             "messaging_product": "whatsapp",
-            "to": "918697034671",
+            "to": "", // Sender Number;
             "type": "template",
             "template": {
-                "name": "dummy_otp_request",
+                "name": "dummy_otp_request", // Template Name
                 "language": {
                     "code": "en",
                     "policy": "deterministic"
