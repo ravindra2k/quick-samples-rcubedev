@@ -135,14 +135,7 @@ if (!function_exists('patchLog')) {
             'ref_id' => $refId,
             'ref_name' => $refName,
             'initiator' => session('associate_id'),
-            'module' => $module,
-            'action' => $action,
-            'before_value' => $beforeValue,
-            'after_value' => $afterValue,
-            'remarks' => $remarks,
-            'log_ip' => request()->ip(),
-            'log_device' => $logDevice,
-            'log_agent' => request()->header('User-Agent'),
+            'module' => $module
         ]);
     }
 }
@@ -229,26 +222,7 @@ class RewardPartnersImport implements ToModel, WithStartRow
 
         // Insert Record;
         return new RewardPartner([
-            'uuid' => $uuid,
-            'reward_category' => $cat_id,
-            'pincode' => $pc->id ?? 0,
-            'brand_name' => $brand_title,
-            'phone_number' => $phone,
-            'contact_number' => $phone2,
-            'address' => $address,
-            'logo' => null,
-            'email' => $email,
-            'website' => $website,
-            'gstin' => null,
-            'published' => 'Yes',
-            'created_by' => session('associate_id'),
-            'created_at' => now(),
-            'tagged_by' => null,
-            'tagged_on' => null,
-            'onboarded_by' => null,
-            'onboarded_on' => null,
-            'onboard_type' => null,
-            'is_sponsored' => 'No'             
+            ... // updates here;         
         ]);
     }
 
