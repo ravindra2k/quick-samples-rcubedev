@@ -310,4 +310,217 @@ $(document).ready(function() {
 });
 ```
 
-### Let's Start the Collection again
+### Custom Toast Notification Using Alpine JS & Tailwind
+
+```notifications.blade.php
+<div x-on:mouseenter="$dispatch('pause-auto-dismiss')" x-on:mouseleave="$dispatch('resume-auto-dismiss')" class="group pointer-events-none fixed inset-x-8 top-0 z-99 flex max-w-full flex-col gap-2 bg-transparent px-6 py-6 md:bottom-0 md:left-[unset] md:right-0 md:top-[unset] md:max-w-sm">
+    <template x-for="(notification, index) in notifications" x-bind:key="notification.id">
+        <!-- root div holds all of the notifications  -->    
+        <div>
+            <!-- Info Notification  -->
+            <template x-if="notification.variant === 'info'">                
+                <div x-data="{ isVisible: false, timeout: null }" x-cloak x-show="isVisible" class="pointer-events-auto relative rounded-2xl border border-sky-500 bg-white text-neutral-600 dark:bg-neutral-950 dark:text-neutral-300" role="alert" x-on:pause-auto-dismiss.window="clearTimeout(timeout)" x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), removeNotification(notification.id) }, displayDuration)" x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id)}, displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                    <div class="flex w-full items-center gap-2.5 bg-sky-500/10 rounded-2xl p-4 transition-all duration-300">
+
+                        <!-- Icon -->
+                        <div class="rounded-full bg-sky-500/15 p-0.5 text-sky-500" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+
+                        <!-- Title & Message -->
+                        <div class="flex flex-col gap-2">
+                            <h3 x-cloak x-show="notification.title" class="text-sm font-semibold text-sky-500" x-text="notification.title"></h3>
+                            <p x-cloak x-show="notification.message" class="text-pretty text-sm" x-text="notification.message"></p>
+                        </div>
+
+                        <!--Dismiss Button -->
+                        <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Success Notification  -->
+            <template x-if="notification.variant === 'success'">                
+                <div x-data="{ isVisible: false, timeout: null }" x-cloak x-show="isVisible" class="pointer-events-auto relative rounded-2xl border border-green-500 bg-white text-neutral-600 dark:bg-neutral-950 dark:text-neutral-300" role="alert" x-on:pause-auto-dismiss.window="clearTimeout(timeout)" x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), removeNotification(notification.id) }, displayDuration)" x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id)}, displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                    <div class="flex w-full items-center gap-2.5 bg-green-500/10 rounded-2xl p-4 transition-all duration-300">
+
+                        <!-- Icon -->
+                        <div class="rounded-full bg-green-500/15 p-0.5 text-green-500" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+
+                        <!-- Title & Message -->
+                        <div class="flex flex-col gap-2">
+                            <h3 x-cloak x-show="notification.title" class="text-sm font-semibold text-green-500" x-text="notification.title"></h3>
+                            <p x-cloak x-show="notification.message" class="text-pretty text-sm" x-text="notification.message"></p>
+                        </div>
+
+                        <!--Dismiss Button -->
+                        <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Warning Notification  -->
+            <template x-if="notification.variant === 'warning'">                
+                <div x-data="{ isVisible: false, timeout: null }" x-cloak x-show="isVisible" class="pointer-events-auto relative rounded-2xl border border-amber-500 bg-white text-neutral-600 dark:bg-neutral-950 dark:text-neutral-300" role="alert" x-on:pause-auto-dismiss.window="clearTimeout(timeout)" x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), removeNotification(notification.id) }, displayDuration)" x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id)}, displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                    <div class="flex w-full items-center gap-2.5 bg-amber-500/10 rounded-2xl p-4 transition-all duration-300">
+
+                        <!-- Icon -->
+                        <div class="rounded-full bg-amber-500/15 p-0.5 text-amber-500" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 10 5Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+
+                        <!-- Title & Message -->
+                        <div class="flex flex-col gap-2">
+                            <h3 x-cloak x-show="notification.title" class="text-sm font-semibold text-amber-500" x-text="notification.title"></h3>
+                            <p x-cloak x-show="notification.message" class="text-pretty text-sm" x-text="notification.message"></p>
+                        </div>
+
+                        <!--Dismiss Button -->
+                        <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Danger Notification  -->
+            <template x-if="notification.variant === 'danger'">                
+                <div x-data="{ isVisible: false, timeout: null }" x-cloak x-show="isVisible" class="pointer-events-auto relative rounded-2xl border border-red-500 bg-white text-neutral-600 dark:bg-neutral-950 dark:text-neutral-300" role="alert" x-on:pause-auto-dismiss.window="clearTimeout(timeout)" x-on:resume-auto-dismiss.window=" timeout = setTimeout(() => {(isVisible = false), removeNotification(notification.id) }, displayDuration)" x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id)}, displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                    <div class="flex w-full items-center gap-2.5 bg-red-500/10 rounded-2xl p-4 transition-all duration-300">
+
+                        <!-- Icon -->
+                        <div class="rounded-full bg-red-500/15 p-0.5 text-red-500" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 10 5Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+
+                        <!-- Title & Message -->
+                        <div class="flex flex-col gap-2">
+                            <h3 x-cloak x-show="notification.title" class="text-sm font-semibold text-red-500" x-text="notification.title"></h3>
+                            <p x-cloak x-show="notification.message" class="text-pretty text-sm" x-text="notification.message"></p>
+                        </div>
+
+                        <!--Dismiss Button -->
+                        <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+        
+            <!-- Message Notification  -->
+            <template x-if="notification.variant === 'message'">                
+                <div x-data="{ isVisible: false, timeout: null }" x-cloak x-show="isVisible" class="pointer-events-auto relative rounded-2xl border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-300" role="alert" x-on:pause-auto-dismiss.window="clearTimeout(timeout)" x-on:resume-auto-dismiss.window="timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id) }, displayDuration)" x-init="$nextTick(() => { isVisible = true }), (timeout = setTimeout(() => { isVisible = false, removeNotification(notification.id) }, displayDuration))" x-transition:enter="transition duration-300 ease-out" x-transition:enter-end="translate-y-0" x-transition:enter-start="translate-y-8" x-transition:leave="transition duration-300 ease-in" x-transition:leave-end="-translate-x-24 opacity-0 md:translate-x-24" x-transition:leave-start="translate-x-0 opacity-100">
+                    <div class="flex w-full rounded-2xl items-center gap-2.5 bg-neutral-50 p-4 transition-all duration-300 dark:bg-neutral-900">
+                        <div class="flex w-full items-center gap-2.5">
+                                
+                            <!-- Avatar -->    
+                            <img x-cloak x-show="notification.sender.avatar" class="mr-2 size-12 rounded-full" alt="avatar" aria-hidden="true" x-bind:src="notification.sender.avatar"/>
+                            <div class="flex flex-col items-start gap-2">
+                                <!-- Title & Message -->     
+                                <h3 x-cloak x-show="notification.sender.name" class="text-sm font-semibold text-neutral-900 dark:text-white" x-text="notification.sender.name"></h3>
+                                <p x-cloak x-show="notification.message" class="text-pretty text-sm" x-text="notification.message"></p>
+
+                                <!-- Action Buttons -->
+                                <div class="flex items-center gap-4">
+                                    <button type="button" class="whitespace-nowrap bg-transparent text-center text-sm font-bold tracking-wide text-black transition hover:opacity-75 active:opacity-100 dark:text-white">Reply</button>
+                                    <button type="button" class="whitespace-nowrap bg-transparent text-center text-sm font-bold tracking-wide text-neutral-600 transition hover:opacity-75 active:opacity-100 dark:text-neutral-300" x-on:click=" (isVisible = false), setTimeout(() => { removeNotification(notification.id) }, 400)">Dismiss</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dismiss Button -->
+                        <button type="button" class="ml-auto" aria-label="dismiss notification" x-on:click="(isVisible = false), removeNotification(notification.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg viewBox="0 0 24 24 stroke="currentColor" fill="none" stroke-width="2" class="size-5 shrink-0" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </template>
+</div>
+```
+
+This Notification should extends in you layout master, or in main html file; where `body` is set to relative.
+
+```js
+// Alpine Component for Notification
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('registerNotification', () => ({
+            notifications: [],
+            displayDuration: 8000,
+            soundEffect: false,
+            addNotification({ variant = 'info', sender = null, title = null, message = null}) {
+                const id = Date.now()
+                const notification = { id, variant, sender, title, message }
+
+                // Keep only the most recent 20 notifications
+                if (this.notifications.length >= 20) {
+                    this.notifications.splice(0, this.notifications.length - 19)
+                }
+
+                // Add the new notification to the notifications stack
+                this.notifications.push(notification)
+
+                if (this.soundEffect) {
+                    // Play the notification sound
+                    const notificationSound = new Audio('https://res.cloudinary.com/ds8pgw1pf/video/upload/v1728571480/penguinui/component-assets/sounds/ding.mp3')
+                    notificationSound.play().catch((error) => {
+                        console.error('Error playing the sound:', error)
+                    })
+                }
+            },
+            removeNotification(id) {
+                setTimeout(() => {
+                    this.notifications = this.notifications.filter(
+                        (notification) => notification.id !== id,
+                    )
+                }, 400);
+            },
+        }));
+    });
+
+    async function notifyUser(variant = "info", title = null, message = null, duration = null) {
+        window.dispatchEvent(new CustomEvent('notify', {
+            detail: {
+                variant: variant,
+                title: title,
+                message: message 
+            }
+        }))
+    }
+```
+
+Now a common function `notifyUser` can be used;
+**Use Case**
+
+````js
+notifyUser('info', 'Just a Information', 'Github is just awesome');
+notifyUser('success', 'Action Success', 'Customer Data has been updated');
+notifyUser('warning', '1 step to go.', 'Please solve the captcha');
+notifyUser('danger', 'Action Failed', 'Internal Server Error');
+```
