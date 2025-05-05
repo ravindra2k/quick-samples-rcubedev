@@ -498,3 +498,26 @@ notifyUser('success', 'Action Success', 'Customer Data has been updated');
 notifyUser('warning', '1 step to go.', 'Please solve the captcha');
 notifyUser('danger', 'Action Failed', 'Internal Server Error');
 ```
+
+### Files Structure in Node JS, Express Application
+
+```
+├── src/
+│   ├── config/        # Configuration files (database, environment variables)
+│   ├── controllers/   # Handle HTTP requests (e.g., UserController.ts)
+│   ├── models/        # Sequelize models (database schema definitions)
+│   ├── middlewares/   # Custom middlewares (auth, logging, validation)
+│   ├── routes/        # API route definitions
+│   ├── services/      # Business logic (separating from controllers)
+│   ├── utils/         # Helper functions
+│   ├── server.ts      # Main entry point
+│   ├── public/        # For Serving Static Files (e.g., images, CSS, JS)
+│
+├── dist/              # Compiled TypeScript files
+├── node_modules/      # Dependencies
+├── .env               # Environment variables (excluded in .gitignore)
+├── package.json       # Project dependencies and scripts
+├── tsconfig.json      # TypeScript configuration
+├── .gitignore         # Ignored files
+└── documentation.md   # Project documentation
+```
