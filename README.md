@@ -492,7 +492,7 @@ This Notification should extends in you layout master, or in main html file; whe
 Now a common function `notifyUser` can be used;
 **Use Case**
 
-````js
+```js
 notifyUser('info', 'Just a Information', 'Github is just awesome');
 notifyUser('success', 'Action Success', 'Customer Data has been updated');
 notifyUser('warning', '1 step to go.', 'Please solve the captcha');
